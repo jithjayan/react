@@ -34,6 +34,12 @@ export default function App(){
   const[list,setList]=useState([])
   const[input,setInput]=useState({name:'',age:''})
 
+  const handleSubmit=(e)=>{
+    e.preventDefault()
+    setList((prv)=>([...prv,input]))
+    setInput({name:'',age:''})
+  }
+
   const handleInput=(e) =>{
     console.log(e.target);
     const {name,value}=e.target
@@ -43,11 +49,27 @@ export default function App(){
   }
   return(
     <>
-    <form>
+    <form onSubmit={handleSubmit}>
       <input type="text" name="name" id="name" placeholder="name" value={input.name} onChange={handleInput}/>
       <input type="number" name="age" id="age" placeholder="age" value={input.age} onChange={handleInput}/>
       <input type="submit" value="Add" />
     </form>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Age</th>
+        </tr>
+      </thead>
+      <tbody>
+        {list.map((value,index)=>(
+          <tr key={index}>
+            <td>{value.name}</td>
+            <td>{value.age}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
 
     </>
   )
